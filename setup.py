@@ -17,7 +17,8 @@ requirements = [
     'humanize',
     'appdirs',
     'anyconfig',
-    'PyYAML'
+    'PyYAML',
+    'dill'
 ]
 
 test_requirements = [
