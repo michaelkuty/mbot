@@ -2,18 +2,18 @@
 MBot
 ====
 
-.. image:: https://img.shields.io/pypi/v/sbot.svg
-        :target: https://pypi.python.org/pypi/sbot
+.. image:: https://img.shields.io/pypi/v/mbot.svg
+        :target: https://pypi.python.org/pypi/mbot
 
-.. image:: https://img.shields.io/travis/michaelkuty/sbot.svg
-        :target: https://travis-ci.org/michaelkuty/sbot
+.. image:: https://img.shields.io/travis/michaelkuty/mbot.svg
+        :target: https://travis-ci.org/michaelkuty/mbot
 
-.. image:: https://readthedocs.org/projects/sbot/badge/?version=latest
-        :target: https://sbot.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/mbot/badge/?version=latest
+        :target: https://mbot.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://pyup.io/repos/github/michaelkuty/sbot/shield.svg
-     :target: https://pyup.io/repos/github/michaelkuty/sbot/
+.. image:: https://pyup.io/repos/github/michaelkuty/mbot/shield.svg
+     :target: https://pyup.io/repos/github/michaelkuty/mbot/
      :alt: Updates
 
 
