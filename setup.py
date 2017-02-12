@@ -39,7 +39,7 @@ setup(
     long_description=readme + '\n\n' + history,
     author="Michael Kutý",
     author_email='6du1ro.n@gmail.com',
-    url='https://github.com/michaelkuty/sbot',
+    url='https://github.com/michaelkuty/mbot',
     packages=[
         'mbot',
     ],
