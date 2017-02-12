@@ -20,7 +20,8 @@ requirements = [
     'PyYAML',
     'dill',
     'typing',
-    'asyncio'
+    'asyncio',
+    'Jinja2'
 ]
 
 test_requirements = [

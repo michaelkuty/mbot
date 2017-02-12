@@ -43,6 +43,7 @@ slack:
     - mbot.contrib.airflow.AirflowTrigger
     - mbot.contrib.sql.SQL
     - mbot.contrib.help.Help
+    - mbot.contrib.jinja2.Template
 
 storage:
   engine: local

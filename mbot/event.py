@@ -2,7 +2,7 @@
 import logging
 import re
 from re import search
-
+from jinja2 import Template
 from slugify import slugify
 
 LOG = logging.getLogger(__name__)
@@ -26,10 +26,27 @@ class Event:
         """Return user if is present in body"""
         return self.get("user", None)
 
+    def get_template_context(self):
+        """Returns template context"""
+        return {
+            'bot': self.bot,
+            'backend': self.backend,
+            'state': self.bot.state,
+            'msg': self
+        }
+
     @property
     def text(self):
         """Return text if is present in body"""
-        return self.get("text", None)
+        txt = self.get("text", None)
+        if txt:
+            template = Template(txt)
+            try:
+                return template.render(self.get_template_context())
+            except Exception as e:
+                LOG.error("Error rendering template %s with %s" % (
+                    self.text, e))
+        return txt
 
     def reply(self, *args, **kwargs):
         """Simple reply on message

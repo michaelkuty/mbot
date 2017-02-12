@@ -50,6 +50,7 @@ Middlewares
 * Joker (say some joke)
 * History (list of your commands, save shortcuts)
 * Help
+* Jinja2 Template
 
 Features
 --------
@@ -63,6 +64,7 @@ Features
 * Dialogs
 * Auto installing of dependencies
 * Dynamic loading
+* Render messages with Jinja2
 
 Installation
 ------------
@@ -130,5 +132,6 @@ TODO
 * Support Celery as executor
 * SSH
 * Use appdirs when data-path is not provied
+* Chain of commands
 
 .. |Animation| image:: https://github.com/michaelkuty/mbot/raw/master/docs/images/animation.gif
