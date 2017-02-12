@@ -42,6 +42,7 @@ slack:
     - mbot.contrib.dialogs.Dialogs
     - mbot.contrib.airflow.AirflowTrigger
     - mbot.contrib.sql.SQL
+    - mbot.contrib.yfinance.YahooFinance
     - mbot.contrib.help.Help
     - mbot.contrib.jinja2.Template
 
