@@ -1,6 +1,5 @@
 
 import logging
-import os
 
 from mbot import Middleware
 
@@ -12,7 +11,7 @@ class Debug(Middleware):
     public = True
 
     def skip_middleware(self, msg):
-        return not os.environ.get("DEBUG", False)
+        return msg.bot.conf.logging['verbosity'] != 'DEBUG'
 
     def process(self, msg):
         LOG.debug(msg)

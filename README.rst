@@ -28,7 +28,7 @@ Message Backends
 ----------------
 
 * Slack
-* MQTT (TODO)
+* MQTT (in dev)
 * RabbitMQ (TODO)
 
 Storage Backends

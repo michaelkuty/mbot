@@ -87,9 +87,6 @@ class Bot:
         # this is passed to all middlewares
         self.kwargs = kwargs
 
-        # load dynamic parts
-        self.load_backends(backends or self.conf.core['backends'])
-
         StorageCls = self.load_thing(self.possible_storages[storage_engine])
 
         self.storage = StorageCls(self, encrypt=encrypt, **self.kwargs)
@@ -97,16 +94,21 @@ class Bot:
         # state persistence
         try:
             self.state = self.storage.restore_state(self.conf.data_path)
+            self.conf.init()
+            self.conf.init_logging()
         except:
             self.state = StateMachine(self)
 
+        # load dynamic parts
+        self.load_backends(backends or self.conf.core['backends'])
+
+        self.executor = ThreadPoolExecutor(max_workers=EXECUTOR_POOL_SIZE)
         # initialize pools
         if sys.platform == 'win32':
             self.loop = asyncio.ProactorEventLoop()
         else:
             self.loop = asyncio.get_event_loop()
 
-        self.executor = ThreadPoolExecutor(max_workers=EXECUTOR_POOL_SIZE)
         self.loop.set_default_executor(self.executor)
         self.loop.set_exception_handler(self._async_exception_handler)
 
@@ -196,7 +198,7 @@ class Bot:
 
                 self.add_async_job(self.run_pending_jobs)
 
-                time.sleep(1)
+                asyncio.sleep(1)
 
         else:
             LOG.info("Connection Failed for %s." % backend)
@@ -217,7 +219,10 @@ class Bot:
         """
 
         for backend in backends or self._backends:
-            self.loop.create_task(self.handle_backend(backend))
+            if not backend.own_loop:
+                self.loop.create_task(self.handle_backend(backend))
+            else:
+                backend.start_loop()
 
         # Run forever and catch keyboard interrupt
         try:
@@ -225,10 +230,18 @@ class Bot:
             LOG.info("Starting BOT core loop")
             self.loop.run_forever()
         except KeyboardInterrupt:
+            for backend in backends or self._backends:
+                if backend.own_loop:
+                    backend.stop_loop()
             self.loop.create_task(self.async_stop())
             self.loop.run_forever()
         finally:
             self.loop.close()
+
+    def get_backend(self, code):
+        for backend in self._backends:
+            if code == backend.code:
+                return backend
 
     def get_middlewares(self, backends=None):
         middlewares = []

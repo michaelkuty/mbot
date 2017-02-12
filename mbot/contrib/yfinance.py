@@ -10,7 +10,8 @@ class YahooFinance(Middleware):
 
     requirements = ['yahoo-finance', 'BeautifulSoup4', 'plotly']
     public = True
-    parameters = ['finance', 'date-from', 'date-to']
+    parameters = ['finance', ('date-from', '2014-01-01'),
+                  ('date-to', '2017-01-01')]
 
     def skip_middleware(self, msg):
         return not (msg.text and msg.user and "finance:" in msg.text)

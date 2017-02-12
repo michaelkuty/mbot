@@ -18,6 +18,8 @@ class Dispatcher:
 
     """
 
+    own_loop = False
+
     @property
     def code(self):
         """Returns name"""
@@ -178,6 +180,11 @@ class Dispatcher:
     def get_users(self):
         """Returns dictionary of users"""
         return {}
+
+    def __setstate__(self, state):
+        super().__setstate__(state)
+        self.load_middlewares(self.conf['middlewares'])
+        return state
 
     def __getstate__(self):
         state = self.__dict__.copy()
