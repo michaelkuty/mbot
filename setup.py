@@ -18,7 +18,8 @@ requirements = [
     'appdirs',
     'anyconfig',
     'PyYAML',
-    'dill'
+    'dill',
+    'typing'
 ]
 
 test_requirements = [
