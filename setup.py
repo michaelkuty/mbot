@@ -19,7 +19,8 @@ requirements = [
     'anyconfig',
     'PyYAML',
     'dill',
-    'typing'
+    'typing',
+    'asyncio'
 ]
 
 test_requirements = [
