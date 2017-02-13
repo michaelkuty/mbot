@@ -156,13 +156,13 @@ class Config:
     @property
     def data_path(self):
         if not self._data_path:
-            return os.path.join(DATA_PATH, "state.db")
+            self._data_path = os.path.join(DATA_PATH, "state.db")
         return self._data_path
 
     @property
     def config_path(self):
         if not self._config_path:
-            return os.path.join(CONFIG_PATH, "mbot.conf")
+            self._config_path = os.path.join(CONFIG_PATH, "mbot.conf")
         return self._config_path
 
     def is_ready(self, key=None):

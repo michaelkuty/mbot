@@ -16,17 +16,11 @@ def main(args=None, **kwargs):
     pass
 
 
-def check_config(key):
-    cfg = Config()
-    cfg.load()
-    return not cfg.is_ready(key)
-
-
 @click.command()
 @click.option('--state-path')
 @click.option('--config-path')
 @click.option('--encrypt', default=True)
-@click.option('--slack-token', prompt=check_config("slack.token"))
+@click.option('--slack-token')
 def run(args=None, **kwargs):
     """Run mbot"""
 
@@ -36,10 +30,12 @@ def run(args=None, **kwargs):
 
 
 @click.command()
+@click.option('--config-path')
+@click.option('--state-path')
 def config(args=None, **kwargs):
     """Show config"""
 
-    cfg = Config()
+    cfg = Config(**kwargs)
     cfg.load()
     pp.pprint(cfg.conf)
 

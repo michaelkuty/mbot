@@ -98,6 +98,8 @@ class Bot:
             self.conf.init_logging()
         except:
             self.state = StateMachine(self)
+        finally:
+            self.state.state_path = self.conf.data_path
 
         # load dynamic parts
         self.load_backends(backends or self.conf.core['backends'])
