@@ -1,4 +1,3 @@
-from pyjokes.pyjokes import get_joke
 
 from mbot import Middleware
 
@@ -14,4 +13,5 @@ class Joker(Middleware):
 
     def process(self, msg):
         """`joke`"""
+        from pyjokes.pyjokes import get_joke
         msg.reply(get_joke(category="all"))
