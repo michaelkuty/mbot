@@ -116,6 +116,7 @@ class Config:
                 from cryptography.fernet import Fernet
             except ImportError:
                 install_package("cryptography")
+                from cryptography.fernet import Fernet
 
         _token = self.conf.get("storage", {}).get("fernet_token", None)
 

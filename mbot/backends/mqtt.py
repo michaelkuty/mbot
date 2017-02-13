@@ -52,6 +52,7 @@ class MQTT(Dispatcher):
                 import paho.mqtt.client as mqtt
             except ImportError:
                 install_package("paho-mqtt")
+                import paho.mqtt.client as mqtt
 
             self.client = mqtt.Client()
             self.client.on_connect = on_connect

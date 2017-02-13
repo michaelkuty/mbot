@@ -27,6 +27,7 @@ class Slack(Dispatcher):
                 from slackclient import SlackClient
             except ImportError:
                 install_package("slackclient")
+                from slackclient import SlackClient
 
             self.client = SlackClient(self.conf['token'])
 
