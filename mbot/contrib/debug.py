@@ -11,7 +11,7 @@ class Debug(Middleware):
     public = True
 
     def skip_middleware(self, msg):
-        return msg.bot.conf.logging['verbosity'] != 'DEBUG'
+        return not msg.bot.conf.debug
 
     def process(self, msg):
         LOG.debug(msg)

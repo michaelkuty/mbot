@@ -52,7 +52,7 @@ storage:
   fernet_token: {fernet_token}
 
 logging:
-  verbosity: INFO
+  level: INFO
 """
 
 
@@ -86,6 +86,15 @@ class Config:
     def logging(self):
         return self.conf['logging']
 
+    def get_log_level(self):
+        return getattr(logging,
+                       self.logging['level'],
+                       logging.DEBUG)
+
+    @property
+    def DEBUG(self):
+        return self.get_log_level() == logging.DEBUG
+
     def init_logging(self):
         """Init logging"""
 
@@ -97,9 +106,7 @@ class Config:
             from raven import Client
             self.sentry = Client(self.logging['sentry_dsn'])
 
-        logging.basicConfig(level=getattr(logging,
-                                          self.logging['verbosity'],
-                                          logging.DEBUG))
+        logging.basicConfig(level=self.get_log_level())
 
     def init(self):
         """Create directories and loads config"""
