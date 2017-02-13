@@ -81,8 +81,7 @@ class Bot:
         self.conf.init_logging()
 
         if self.conf.storage['encrypt']:
-            from cryptography.fernet import Fernet
-            self.fernet = Fernet(self.conf.storage["fernet_token"])
+            self.fernet = self.conf.get_fernet_token()
 
         # this is passed to all middlewares
         self.kwargs = kwargs

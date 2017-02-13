@@ -108,6 +108,22 @@ class Config:
 
         logging.basicConfig(level=self.get_log_level())
 
+    def get_fernet_token(self):
+        """Return new token or initialized fernet token"""
+
+        if self.encrypt:
+            try:
+                from cryptography.fernet import Fernet
+            except ImportError:
+                install_package("cryptography")
+
+        _token = self.conf.get("storage", {}).get("fernet_token", None)
+
+        if self.encrypt and not _token:
+            return Fernet.generate_key().decode("utf-8")
+        elif self.encrypt and _token:
+            return Fernet(_token)
+
     def init(self):
         """Create directories and loads config"""
 
@@ -124,11 +140,7 @@ class Config:
         if not os.path.exists(self.config_path):
 
             if self.encrypt and not hasattr(self, "fernet_token"):
-                try:
-                    from cryptography.fernet import Fernet
-                except ImportError:
-                    install_package("cryptography")
-                self.fernet_token = Fernet.generate_key().decode("utf-8")
+                self.fernet_token = self.get_fernet_token()
 
             ctx = self.__dict__.copy()
             ctx.update({
