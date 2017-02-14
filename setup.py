@@ -12,7 +12,7 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'Click>=6.0',
-    'slugify',
+    'python-slugify',
     'parsedatetime',
     'humanize',
     'appdirs',
