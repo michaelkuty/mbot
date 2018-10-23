@@ -37,6 +37,7 @@ def config(args=None, **kwargs):
 
     cfg = Config(**kwargs)
     cfg.load()
+    pp.pprint("Path: %s" % cfg.config_path)
     pp.pprint(cfg.conf)
 
 

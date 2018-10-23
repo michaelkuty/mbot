@@ -88,7 +88,7 @@ class Config:
 
     def get_log_level(self):
         return getattr(logging,
-                       self.logging['level'],
+                       self.logging.get('level', 'DEBUG'),
                        logging.DEBUG)
 
     @property

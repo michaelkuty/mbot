@@ -4,7 +4,7 @@ from mbot import Middleware, Dialog
 
 class Connections(Middleware):
 
-    requirements = ['delegator']
+    requirements = ['delegator.py']
     parameters = ["conn", "name", "schema", "username",
                   "password", "host", "port",
                   "engine", "uri"]

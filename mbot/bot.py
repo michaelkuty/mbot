@@ -28,6 +28,12 @@ try:
 except ImportError:
     pass
 
+try:
+    import aiomonitor
+    AIOMONITOR = True
+except ImportError:
+    AIOMONITOR = False
+
 
 def callback(func: Callable[..., None]) -> Callable[..., None]:
     """Annotation to mark method as safe to call from within the event loop."""
@@ -225,19 +231,27 @@ class Bot:
             else:
                 backend.start_loop()
 
-        # Run forever and catch keyboard interrupt
-        try:
-            # Block until stopped
-            LOG.info("Starting BOT core loop")
-            self.loop.run_forever()
-        except KeyboardInterrupt:
-            for backend in backends or self._backends:
-                if backend.own_loop:
-                    backend.stop_loop()
-            self.loop.create_task(self.async_stop())
-            self.loop.run_forever()
-        finally:
-            self.loop.close()
+        def _run():
+            # Run forever and catch keyboard interrupt
+            try:
+                # Block until stopped
+                LOG.info("Starting BOT loop")
+                self.loop.run_forever()
+                return self.exit_code
+            except KeyboardInterrupt:
+                for backend in backends or self._backends:
+                    if backend.own_loop:
+                        backend.stop_loop()
+                self.loop.create_task(self.async_stop())
+                self.loop.run_forever()
+            finally:
+                self.loop.close()
+
+        if AIOMONITOR:
+            with aiomonitor.start_monitor(loop=self.loop):
+                _run()
+        else:
+            run()
 
     def get_backend(self, code):
         for backend in self._backends:
